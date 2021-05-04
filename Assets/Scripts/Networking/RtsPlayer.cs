@@ -63,8 +63,8 @@ namespace Networking
             // only perform logic if not a server to avoid duplicate units being added to above list
             if (!isClientOnly) return;
             // subscribe to events to perform custom logic when unit is spawned/despawned
-            Unit.Unit.AuthorityOnUnitSpawned -= AuthorityHandleUnitSpawned;
-            Unit.Unit.AuthorityOnUnitDeSpawned -= AuthorityHandleUnitDeSpawned;
+            Unit.Unit.AuthorityOnUnitSpawned += AuthorityHandleUnitSpawned;
+            Unit.Unit.AuthorityOnUnitDeSpawned += AuthorityHandleUnitDeSpawned;
         }
         
         public override void OnStopClient()
@@ -82,14 +82,14 @@ namespace Networking
         {
             // only perform logic if we own the current player - to avoid adding units from other players lists
             if (!hasAuthority) return;
-            myUnits.Add(unit);
+            myUnits.Remove(unit);
         }
 
         private void AuthorityHandleUnitSpawned(Unit.Unit unit)
         {
             // only perform logic if we own the current player - to avoid removing units from other players lists
             if (!hasAuthority) return;
-            myUnits.Remove(unit);
+            myUnits.Add(unit);
         }
 
         #endregion
