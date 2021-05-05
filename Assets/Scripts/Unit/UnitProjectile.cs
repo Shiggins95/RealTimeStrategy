@@ -1,4 +1,5 @@
 using System;
+using Combat;
 using Mirror;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Unit
         [SerializeField] private Rigidbody rb;
         [SerializeField] private float destroyTimer = 5f;
         [SerializeField] private float launchForce = 5f;
+        [SerializeField] private int damage;
 
         private void Start()
         {
@@ -19,6 +21,16 @@ namespace Unit
         {
             // call method after x seconds
             Invoke(nameof(DestroySelf), destroyTimer);
+        }
+
+        [ServerCallback]
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!other.TryGetComponent<NetworkIdentity>(out NetworkIdentity networkIdentity)) return;
+            if (networkIdentity.connectionToClient == connectionToClient) return;
+            if (!other.TryGetComponent<Health>(out Health health)) return;
+            health.DealDamage(damage);
+            DestroySelf();
         }
 
         [Server]

@@ -20,7 +20,13 @@ namespace Unit
         {
             // assign reference to camera
             mainCamera = Camera.main;
-            // get our connection and then get the player script from our connection
+            Unit.AuthorityOnUnitDeSpawned += AuthorityHandleUnitDespawned;
+        }
+
+        private void OnDestroy()
+        {
+            
+            Unit.AuthorityOnUnitDeSpawned -= AuthorityHandleUnitDespawned;
         }
 
         private void Update()
@@ -130,6 +136,11 @@ namespace Unit
             {
                 selectedUnit.SelectUnit();
             }
+        }
+
+        private void AuthorityHandleUnitDespawned(Unit unit)
+        {
+            SelectedUnits.Remove(unit);
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Networking
         // When player is initialised
         public override void OnStartServer()
         {
-            base.OnStartServer();
             // subscribe to server associated events in the Unit script as we want logic to be performed when
             // a new unit is spawned
             Unit.Unit.ServerOnUnitSpawned += ServerHandleUnitSpawned;
@@ -29,7 +28,6 @@ namespace Networking
         // When player exists / server is stopped
         public override void OnStopServer()
         {
-            base.OnStopServer();
             // unsubscribe from server associated events in the Unit script
             Unit.Unit.ServerOnUnitSpawned -= ServerHandleUnitSpawned;
             Unit.Unit.ServerOnUnitDeSpawned -= ServerHandleUnitDeSpawned;
@@ -57,11 +55,10 @@ namespace Networking
         #region Client
 
         // when client starts for current player
-        public override void OnStartClient()
+        public override void OnStartAuthority()
         {
-            base.OnStartClient();
             // only perform logic if not a server to avoid duplicate units being added to above list
-            if (!isClientOnly) return;
+            if (NetworkServer.active) return;
             // subscribe to events to perform custom logic when unit is spawned/despawned
             Unit.Unit.AuthorityOnUnitSpawned += AuthorityHandleUnitSpawned;
             Unit.Unit.AuthorityOnUnitDeSpawned += AuthorityHandleUnitDeSpawned;
@@ -69,27 +66,21 @@ namespace Networking
         
         public override void OnStopClient()
         {
-            base.OnStopClient();
             // only perform logic if not a server to avoid duplciate commands
-            if (!isClientOnly) return;
+            if (!isClientOnly || !hasAuthority) return;
             // unsubscribe from events
             Unit.Unit.AuthorityOnUnitSpawned -= AuthorityHandleUnitSpawned;
             Unit.Unit.AuthorityOnUnitDeSpawned -= AuthorityHandleUnitDeSpawned;
         }
         
+        private void AuthorityHandleUnitSpawned(Unit.Unit unit)
+        {
+            myUnits.Add(unit);
+        }
         
         private void AuthorityHandleUnitDeSpawned(Unit.Unit unit)
         {
-            // only perform logic if we own the current player - to avoid adding units from other players lists
-            if (!hasAuthority) return;
             myUnits.Remove(unit);
-        }
-
-        private void AuthorityHandleUnitSpawned(Unit.Unit unit)
-        {
-            // only perform logic if we own the current player - to avoid removing units from other players lists
-            if (!hasAuthority) return;
-            myUnits.Add(unit);
         }
 
         #endregion

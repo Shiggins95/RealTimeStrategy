@@ -22,7 +22,7 @@ namespace Combat
             target = newTarget;
         }
 
-        [Command]
+        [Server]
         public void ClearTarget()
         {
             target = null;
