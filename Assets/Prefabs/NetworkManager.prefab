@@ -52,8 +52,8 @@ MonoBehaviour:
   serverTickRate: 30
   serverBatching: 1
   serverBatchInterval: 0
-  offlineScene: Assets/Scenes/Scene_Map01.unity
-  onlineScene: Assets/Scenes/Scene_Menu.unity
+  offlineScene: Assets/Scenes/Scene_Menu.unity
+  onlineScene: Assets/Scenes/Scene_Map01.unity
   transport: {fileID: 7534616917950408671}
   networkAddress: localhost
   maxConnections: 100
@@ -66,7 +66,10 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 7371144080041697647, guid: dcae189731e3148278b96cd23d953dc5, type: 3}
   - {fileID: 2594146656018029624, guid: 6afba94ec99f54a6eadf83d6c691b4c7, type: 3}
+  - {fileID: 673737127912579308, guid: 7401dfc424a204720b20e125786872d7, type: 3}
+  - {fileID: 968663859100937821, guid: e4aeabe05f97941f99d7c02b4aeea3ba, type: 3}
   unitSpawnerPrefab: {fileID: 2594146656018029624, guid: 6afba94ec99f54a6eadf83d6c691b4c7, type: 3}
+  gameOverHandler: {fileID: 6227298649063159803, guid: e4aeabe05f97941f99d7c02b4aeea3ba, type: 3}
 --- !u!114 &7534616917950408671
 MonoBehaviour:
   m_ObjectHideFlags: 0
