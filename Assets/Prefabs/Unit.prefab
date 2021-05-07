@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9012980679845573474}
   - component: {fileID: 694547499971924280}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6547388475556134322}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TargetPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 8124840279671477392}
   - component: {fileID: 8415025511262225865}
   - component: {fileID: 6900599234770238221}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tank with lazer cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 1666252127312180002}
   - component: {fileID: 2447184128265502069}
   - component: {fileID: 2543281799364016409}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -468,7 +468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1552339843772324680}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,8 +529,12 @@ PrefabInstance:
       value: HealthBarCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 2443128853935301527, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443128853935301527, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3203372292326274496, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_SizeDelta.x
@@ -560,6 +564,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 4282626227984486613, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6150107215132215399, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0
@@ -571,6 +579,10 @@ PrefabInstance:
     - target: {fileID: 6150107215132215399, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6886492755871818022, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8346366738681524847, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_Pivot.x
@@ -586,19 +598,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8346366738681524847, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8346366738681524847, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8346366738681524847, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8346366738681524847, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8346366738681524847, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_SizeDelta.x
@@ -655,6 +667,10 @@ PrefabInstance:
     - target: {fileID: 8346366738681524847, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8424799614232484685, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8785331078294978393, guid: b1a8b5b4255f84e89b72ad92f6a9a9b7, type: 3}
       propertyPath: m_FillAmount

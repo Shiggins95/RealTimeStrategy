@@ -11,6 +11,7 @@ namespace Buildings
 
         public static event Action<UnitBase> ServerOnBaseSpawn;
         public static event Action<UnitBase> ServerOnBaseDeSpawn;
+        public static event Action<int> ServerOnPlayerDie;
 
         #region Client
 
@@ -33,6 +34,7 @@ namespace Buildings
         [Server]
         private void ServerHandleOnDie()
         {
+            ServerOnPlayerDie?.Invoke(connectionToClient.connectionId);
             NetworkServer.Destroy(gameObject);
         }
 

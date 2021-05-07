@@ -10,6 +10,7 @@ namespace Buildings
     {
 
         public static event Action<string> ClientOnGameOver;
+        public static event Action ServerOnGameOver;
         
         private List<UnitBase> bases = new List<UnitBase>();
         
@@ -40,8 +41,9 @@ namespace Buildings
             if (bases.Count > 1) return;
             int playerId = bases[0].connectionToClient.connectionId;
             RpcGameOver($"Player {playerId}");
+            ServerOnGameOver?.Invoke();
         }
-        
+
 
         #endregion
 

@@ -1,4 +1,5 @@
 using System;
+using Buildings;
 using Combat;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +16,13 @@ namespace Unit
         {
             // assign reference to camera
             mainCamera = Camera.main;
+            GameOverHandler.ClientOnGameOver += ClientHandleGameOver;
+        }
+        
+        private void OnDestroy()
+        {
+            GameOverHandler.ClientOnGameOver -= ClientHandleGameOver;
+            
         }
 
         private void Update()
@@ -58,6 +66,11 @@ namespace Unit
                 var unitTargeter = unit.GetTargeter();
                 unitTargeter.CmdSetTarget(target.gameObject);
             }
+        }
+
+        private void ClientHandleGameOver(string winnerName)
+        {
+            enabled = false;
         }
     }
 }
