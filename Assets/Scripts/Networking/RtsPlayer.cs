@@ -9,10 +9,15 @@ namespace Networking
     public class RtsPlayer : NetworkBehaviour
     {
         [SerializeField] private List<Unit.Unit> myUnits = new List<Unit.Unit>();
+        [SerializeField] private List<Building> myBuildings = new List<Building>();
 
         public List<Unit.Unit> GetMyUnits()
         {
             return myUnits;
+        }
+        public List<Building> GetMyBuildings()
+        {
+            return myBuildings;
         }
         
         #region Server
@@ -24,6 +29,8 @@ namespace Networking
             // a new unit is spawned
             Unit.Unit.ServerOnUnitSpawned += ServerHandleUnitSpawned;
             Unit.Unit.ServerOnUnitDeSpawned += ServerHandleUnitDeSpawned;
+            Building.ServerOnBuildingSpawned += ServerHandleBuildingSpawned;
+            Building.ServerOnBuildingDeSpawned += ServerHandleBuildingDeSpawned;
         }
 
         // When player exists / server is stopped
@@ -32,6 +39,8 @@ namespace Networking
             // unsubscribe from server associated events in the Unit script
             Unit.Unit.ServerOnUnitSpawned -= ServerHandleUnitSpawned;
             Unit.Unit.ServerOnUnitDeSpawned -= ServerHandleUnitDeSpawned;
+            Building.ServerOnBuildingSpawned -= ServerHandleBuildingSpawned;
+            Building.ServerOnBuildingDeSpawned -= ServerHandleBuildingDeSpawned;
         }
 
         // callback function for event, contains the logic we want to be executed when a unit is despawned
@@ -50,6 +59,21 @@ namespace Networking
             // add spawned unit to current list of myUnits
             myUnits.Add(unit);
         }
+        private void ServerHandleBuildingDeSpawned(Building building)
+        {
+            // only perform logic if the request if for the current client i.e me
+            if (building.connectionToClient.connectionId != connectionToClient.connectionId) return;
+            // remove despawned unit from current list of myUnits
+            myBuildings.Remove(building);
+        }
+
+        private void ServerHandleBuildingSpawned(Building building)
+        {
+            // only perform logic if the request if for the current client i.e me
+            if (building.connectionToClient.connectionId != connectionToClient.connectionId) return;
+            // add spawned unit to current list of myUnits
+            myBuildings.Add(building);
+        }
 
         #endregion
 
@@ -63,6 +87,8 @@ namespace Networking
             // subscribe to events to perform custom logic when unit is spawned/despawned
             Unit.Unit.AuthorityOnUnitSpawned += AuthorityHandleUnitSpawned;
             Unit.Unit.AuthorityOnUnitDeSpawned += AuthorityHandleUnitDeSpawned;
+            Building.AuthorityOnBuildingSpawned += AuthorityHandleBuildingSpawned;
+            Building.AuthorityOnBuildingDeSpawned += AuthorityHandleBuildingDeSpawned;
         }
         
         public override void OnStopClient()
@@ -72,6 +98,8 @@ namespace Networking
             // unsubscribe from events
             Unit.Unit.AuthorityOnUnitSpawned -= AuthorityHandleUnitSpawned;
             Unit.Unit.AuthorityOnUnitDeSpawned -= AuthorityHandleUnitDeSpawned;
+            Building.AuthorityOnBuildingSpawned -= AuthorityHandleBuildingSpawned;
+            Building.AuthorityOnBuildingDeSpawned -= AuthorityHandleBuildingDeSpawned;
         }
         
         private void AuthorityHandleUnitSpawned(Unit.Unit unit)
@@ -82,6 +110,16 @@ namespace Networking
         private void AuthorityHandleUnitDeSpawned(Unit.Unit unit)
         {
             myUnits.Remove(unit);
+        }
+        
+        private void AuthorityHandleBuildingSpawned(Building building)
+        {
+            myBuildings.Add(building);
+        }
+        
+        private void AuthorityHandleBuildingDeSpawned(Building building)
+        {
+            myBuildings.Remove(building);
         }
 
         #endregion
