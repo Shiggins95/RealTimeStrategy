@@ -10,6 +10,7 @@ namespace Unit
     {
         #region Declarables
 
+        [SerializeField] private int resourceCost = 10;
         [SerializeField] private UnityEvent onSelected;
         [SerializeField] private UnityEvent onDeSelected;
         [SerializeField] private UnitMovement unitMovement;
@@ -37,6 +38,11 @@ namespace Unit
         public Targeter GetTargeter()
         {
             return targeter;
+        }
+
+        public int GetResourceCost()
+        {
+            return resourceCost;
         }
 
         #endregion

@@ -57,6 +57,12 @@ namespace Unit
         [Command]
         public void CmdMove(Vector3 position)
         {
+            ServerMove(position);
+        }
+
+        [Server]
+        public void ServerMove(Vector3 position)
+        {
             targeter.ClearTarget();
             // return if the position is out of bounds of the nav mesh
             if (!NavMesh.SamplePosition(position, out NavMeshHit hit, 1f, NavMesh.AllAreas)) return;
