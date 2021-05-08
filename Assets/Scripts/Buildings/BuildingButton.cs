@@ -1,4 +1,3 @@
-using System;
 using Mirror;
 using Networking;
 using TMPro;
@@ -54,6 +53,7 @@ namespace Buildings
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask))
             {
                 // place building
+                rtsPlayer.CmdTryPlaceBuilding(building.GetId(), hit.point);
             }
 
             Destroy(buildingPreviewInstance);

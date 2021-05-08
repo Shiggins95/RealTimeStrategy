@@ -84,6 +84,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7841164359729631924}
     m_Modifications:
+    - target: {fileID: 5331673685867772781, guid: 1dbf80652e15745e3813d840afe4f51a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6141695987277563341, guid: 1dbf80652e15745e3813d840afe4f51a, type: 3}
       propertyPath: m_Name
       value: UnitSpawnerPreview
@@ -98,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8949251980964481446, guid: 1dbf80652e15745e3813d840afe4f51a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8949251980964481446, guid: 1dbf80652e15745e3813d840afe4f51a, type: 3}
       propertyPath: m_LocalPosition.z

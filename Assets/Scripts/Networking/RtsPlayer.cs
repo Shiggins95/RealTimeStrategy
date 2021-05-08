@@ -10,16 +10,18 @@ namespace Networking
     {
         [SerializeField] private List<Unit.Unit> myUnits = new List<Unit.Unit>();
         [SerializeField] private List<Building> myBuildings = new List<Building>();
+        [SerializeField] private Building[] allBuildings = new Building[0];
 
         public List<Unit.Unit> GetMyUnits()
         {
             return myUnits;
         }
+
         public List<Building> GetMyBuildings()
         {
             return myBuildings;
         }
-        
+
         #region Server
 
         // When player is initialised
@@ -59,6 +61,7 @@ namespace Networking
             // add spawned unit to current list of myUnits
             myUnits.Add(unit);
         }
+
         private void ServerHandleBuildingDeSpawned(Building building)
         {
             // only perform logic if the request if for the current client i.e me
@@ -73,6 +76,25 @@ namespace Networking
             if (building.connectionToClient.connectionId != connectionToClient.connectionId) return;
             // add spawned unit to current list of myUnits
             myBuildings.Add(building);
+        }
+
+        [Command]
+        public void CmdTryPlaceBuilding(int buildingId, Vector3 position)
+        {
+            Building foundBuilding = null;
+            foreach (Building currentBuilding in allBuildings)
+            {
+                if (currentBuilding.GetId() != buildingId) continue;
+                foundBuilding = currentBuilding;
+                break;
+            }
+
+            if (!foundBuilding) return;
+            position.y = 0;
+
+            GameObject buildingInstance =
+                Instantiate(foundBuilding.gameObject, position, foundBuilding.transform.rotation);
+            NetworkServer.Spawn(buildingInstance, connectionToClient);
         }
 
         #endregion
@@ -90,7 +112,7 @@ namespace Networking
             Building.AuthorityOnBuildingSpawned += AuthorityHandleBuildingSpawned;
             Building.AuthorityOnBuildingDeSpawned += AuthorityHandleBuildingDeSpawned;
         }
-        
+
         public override void OnStopClient()
         {
             // only perform logic if not a server to avoid duplciate commands
@@ -101,28 +123,27 @@ namespace Networking
             Building.AuthorityOnBuildingSpawned -= AuthorityHandleBuildingSpawned;
             Building.AuthorityOnBuildingDeSpawned -= AuthorityHandleBuildingDeSpawned;
         }
-        
+
         private void AuthorityHandleUnitSpawned(Unit.Unit unit)
         {
             myUnits.Add(unit);
         }
-        
+
         private void AuthorityHandleUnitDeSpawned(Unit.Unit unit)
         {
             myUnits.Remove(unit);
         }
-        
+
         private void AuthorityHandleBuildingSpawned(Building building)
         {
             myBuildings.Add(building);
         }
-        
+
         private void AuthorityHandleBuildingDeSpawned(Building building)
         {
             myBuildings.Remove(building);
         }
 
         #endregion
-        
     }
 }
