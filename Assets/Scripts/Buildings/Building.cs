@@ -9,12 +9,17 @@ namespace Buildings
         [SerializeField] private Sprite icon;
         [SerializeField] private int id = -1;
         [SerializeField] private int price = 100;
+        [SerializeField] private GameObject buildingPreview;
         
         public static event Action<Building> ServerOnBuildingDeSpawned;
         public static event Action<Building> ServerOnBuildingSpawned;
         public static event Action<Building> AuthorityOnBuildingSpawned;
         public static event Action<Building> AuthorityOnBuildingDeSpawned;
 
+        public GameObject GetBuildingPreview()
+        {
+            return buildingPreview;
+        }
         public Sprite GetIcon()
         {
             return icon;
