@@ -17,6 +17,8 @@ namespace Networking
         [SyncVar(hook = nameof(ClientHandleResourcesUpdated))]
         private int resources = 500;
 
+        private Color teamColor;
+
         public event Action<int> ClientOnResourcesUpdated;
 
         public List<Unit.Unit> GetMyUnits()
@@ -34,21 +36,19 @@ namespace Networking
             return resources;
         }
 
-        [Server]
-        public void SetResources(int newResources)
+        public Color GetTeamColor()
         {
-            resources = newResources;
+            return teamColor;
         }
 
         public bool CanPlaceBuilding(BoxCollider buildingCollider, Vector3 position)
         {
-
             if (Physics.CheckBox(position + buildingCollider.center, buildingCollider.size / 2, Quaternion.identity,
                 buildingLayerMask))
             {
                 return false;
             }
-            
+
             foreach (Building building in myBuildings)
             {
                 if ((position - building.transform.position).sqrMagnitude < buildingRangeLimit * buildingRangeLimit)
@@ -81,6 +81,18 @@ namespace Networking
             Unit.Unit.ServerOnUnitDeSpawned -= ServerHandleUnitDeSpawned;
             Building.ServerOnBuildingSpawned -= ServerHandleBuildingSpawned;
             Building.ServerOnBuildingDeSpawned -= ServerHandleBuildingDeSpawned;
+        }
+        
+        [Server]
+        public void SetResources(int newResources)
+        {
+            resources = newResources;
+        }
+
+        [Server]
+        public void SetTeamColor(Color newColor)
+        {
+            teamColor = newColor;
         }
 
         // callback function for event, contains the logic we want to be executed when a unit is despawned

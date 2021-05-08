@@ -9,9 +9,16 @@ namespace Networking
     {
         [SerializeField] private GameObject unitSpawnerPrefab;
         [SerializeField] private GameOverHandler gameOverHandler;
+
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
             base.OnServerAddPlayer(conn);
+            RtsPlayer rtsPlayer = conn.identity.GetComponent<RtsPlayer>();
+            rtsPlayer.SetTeamColor(new Color(
+                Random.Range(0f, 1f),
+                Random.Range(0f, 1f),
+                Random.Range(0f, 1f)
+            ));
             var spawnedPlayerTransform = conn.identity.transform;
             // create new game object using the spawnable prefab (prefab must be set it Netowrk Manager
             // from Mirror as well
