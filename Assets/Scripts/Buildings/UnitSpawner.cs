@@ -28,7 +28,7 @@ namespace Buildings
         [Server]
         private void ServerHandleDie()
         {
-            // NetworkServer.Destroy(gameObject);
+            NetworkServer.Destroy(gameObject);
         }
 
         // server command

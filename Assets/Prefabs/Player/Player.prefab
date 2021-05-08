@@ -67,3 +67,4 @@ MonoBehaviour:
   myBuildings: []
   allBuildings:
   - {fileID: 5449592361231245766, guid: e8ee3037895614538afd85847cf90c85, type: 3}
+  - {fileID: 5449592361231245766, guid: 1415b405efd6e45698eff7f1144c4887, type: 3}

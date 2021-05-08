@@ -11,6 +11,10 @@ namespace Networking
         [SerializeField] private List<Unit.Unit> myUnits = new List<Unit.Unit>();
         [SerializeField] private List<Building> myBuildings = new List<Building>();
         [SerializeField] private Building[] allBuildings = new Building[0];
+        [SyncVar(hook = nameof(ClientHandleResourcesUpdated))]
+        private int resources = 500;
+
+        public event Action<int> ClientOnResourcesUpdated;
 
         public List<Unit.Unit> GetMyUnits()
         {
@@ -20,6 +24,17 @@ namespace Networking
         public List<Building> GetMyBuildings()
         {
             return myBuildings;
+        }
+
+        public int GetResources()
+        {
+            return resources;
+        }
+
+        [Server]
+        public void SetResources(int newResources)
+        {
+            resources = newResources;
         }
 
         #region Server
@@ -144,6 +159,10 @@ namespace Networking
             myBuildings.Remove(building);
         }
 
+        private void ClientHandleResourcesUpdated(int oldResources, int newResources)
+        {
+            ClientOnResourcesUpdated?.Invoke(newResources);
+        }
         #endregion
     }
 }
