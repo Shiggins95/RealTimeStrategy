@@ -14,15 +14,11 @@ namespace Resources
 
         private void Update()
         {
-            if (!rtsPlayer)
-            {
-                rtsPlayer = NetworkClient.connection.identity.GetComponent<RtsPlayer>();
-                if (rtsPlayer)
-                {
-                    ClientHandleResourcesUpdated(rtsPlayer.GetResources());
-                    rtsPlayer.ClientOnResourcesUpdated += ClientHandleResourcesUpdated;
-                }
-            }
+            if (rtsPlayer) return;
+            rtsPlayer = NetworkClient.connection.identity.GetComponent<RtsPlayer>();
+            if (!rtsPlayer) return;
+            ClientHandleResourcesUpdated(rtsPlayer.GetResources());
+            rtsPlayer.ClientOnResourcesUpdated += ClientHandleResourcesUpdated;
         }
 
         private void OnDestroy()

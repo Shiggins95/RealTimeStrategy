@@ -11,6 +11,9 @@ namespace Networking
         [SerializeField] private List<Unit.Unit> myUnits = new List<Unit.Unit>();
         [SerializeField] private List<Building> myBuildings = new List<Building>();
         [SerializeField] private Building[] allBuildings = new Building[0];
+        [SerializeField] private LayerMask buildingLayerMask;
+        [SerializeField] private float buildingRangeLimit = 5f;
+
         [SyncVar(hook = nameof(ClientHandleResourcesUpdated))]
         private int resources = 500;
 
@@ -35,6 +38,26 @@ namespace Networking
         public void SetResources(int newResources)
         {
             resources = newResources;
+        }
+
+        public bool CanPlaceBuilding(BoxCollider buildingCollider, Vector3 position)
+        {
+
+            if (Physics.CheckBox(position + buildingCollider.center, buildingCollider.size / 2, Quaternion.identity,
+                buildingLayerMask))
+            {
+                return false;
+            }
+            
+            foreach (Building building in myBuildings)
+            {
+                if ((position - building.transform.position).sqrMagnitude < buildingRangeLimit * buildingRangeLimit)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #region Server
@@ -107,9 +130,16 @@ namespace Networking
             if (!foundBuilding) return;
             position.y = 0;
 
+            if (resources < foundBuilding.GetPrice()) return;
+
+            BoxCollider buildingCollider = foundBuilding.GetComponent<BoxCollider>();
+
+            if (!CanPlaceBuilding(buildingCollider, position)) return;
+
             GameObject buildingInstance =
                 Instantiate(foundBuilding.gameObject, position, foundBuilding.transform.rotation);
             NetworkServer.Spawn(buildingInstance, connectionToClient);
+            SetResources(resources - foundBuilding.GetPrice());
         }
 
         #endregion
@@ -163,6 +193,7 @@ namespace Networking
         {
             ClientOnResourcesUpdated?.Invoke(newResources);
         }
+
         #endregion
     }
 }

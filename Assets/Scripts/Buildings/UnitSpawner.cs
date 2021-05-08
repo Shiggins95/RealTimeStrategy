@@ -32,6 +32,14 @@ namespace Buildings
 
         private RtsPlayer rtsPlayer;
 
+        private void Start()
+        {
+            if (isClient)
+            {
+                remainingUnitsText.text = "0";
+            }
+        }
+
         private void Update()
         {
             if (isServer)
